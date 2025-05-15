@@ -1,0 +1,11 @@
+# don’t track any CSV data files
+*.csv
+data/
+___obs/
+___projects/
+html/
+notebooks/
+temp_convert_env/
+VAR/
+venvMasterThesis/
+.env
