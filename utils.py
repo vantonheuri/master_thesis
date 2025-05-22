@@ -337,7 +337,7 @@ def plot_stationary_with_sentiment(
         ax3.plot(sent_norm.index, sent_norm, '--', label=f'{t} sentiment (norm)')
         corr = pd_norm.corr(sent_norm)
         print(f'Correlation {t}: {corr:.4f}')
-    ax3.set_title(f'{t} - Normalized Price vs Sentiment'); ax3.set_xlabel('Date'); ax3.set_ylabel('Normalized Value'); ax3.legend(); ax3.grid(True); plt.show()
+    ax3.set_title(f'{t} - Normalized Price vs Sentiment - Alpha Vantage- (Last 6 Months, Pearson r={corr:.3f})'); ax3.set_xlabel('Date'); ax3.set_ylabel('Normalized Value'); ax3.legend(); ax3.grid(True); plt.show()
 
 def plot_stationary_with_sentiment_df(
     price_ticker: str,
