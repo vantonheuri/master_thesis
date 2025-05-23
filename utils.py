@@ -421,3 +421,78 @@ def plot_stationary_with_sentiment_df(
 
     plt.show()
 
+
+
+def plot_prices_dual_scale(
+    tickers: List[str],
+    frequency: str = 'daily',
+    start_date: Optional[str] = None,
+    end_date: Optional[str] = None,
+    months_back: Optional[int] = None,
+    sma_windows: Optional[List[int]] = None,
+    ema_spans: Optional[List[int]] = None,
+    title: Optional[str] = None
+) -> None:
+    """
+    Plot two subplots for price comparison: one in normal scale, one in log scale.
+    Includes optional SMA and EMA overlays.
+    """
+    if months_back is not None:
+        if end_date:
+            end = pd.to_datetime(end_date)
+        else:
+            df0 = load_prices(tickers[0], frequency)
+            end = df0.index.max()
+        start = end - pd.DateOffset(months=months_back)
+    else:
+        start = pd.to_datetime(start_date) if start_date else None
+        end   = pd.to_datetime(end_date)   if end_date   else None
+
+    fig, axes = plt.subplots(2, 1, figsize=(14, 10), sharex=True)
+
+    for ticker in tickers:
+        df = load_prices(ticker, frequency)
+        df = df.loc[
+            (start or df.index.min()):
+            (end   or df.index.max())
+        ]
+        price = df['adjusted_close']
+
+        # Linear plot
+        axes[0].plot(df.index, price, label=f'{ticker} Price')
+        if sma_windows:
+            for w in sma_windows:
+                sma = price.rolling(w).mean()
+                axes[0].plot(df.index, sma, '--', label=f'{ticker} SMA{w}')
+        if ema_spans:
+            for span in ema_spans:
+                ema = price.ewm(span=span, adjust=False).mean()
+                axes[0].plot(df.index, ema, ':', label=f'{ticker} EMA{span}')
+
+        # Log plot
+        axes[1].plot(df.index, price, label=f'{ticker} Price')
+        if sma_windows:
+            for w in sma_windows:
+                sma = price.rolling(w).mean()
+                axes[1].plot(df.index, sma, '--', label=f'{ticker} SMA{w}')
+        if ema_spans:
+            for span in ema_spans:
+                ema = price.ewm(span=span, adjust=False).mean()
+                axes[1].plot(df.index, ema, ':', label=f'{ticker} EMA{span}')
+
+    # Linear
+    axes[0].set_title((title or 'Price Comparison') + ' (Linear Scale)')
+    axes[0].set_ylabel('Price')
+    axes[0].grid(True)
+    axes[0].legend()
+
+    # Log
+    axes[1].set_yscale('log')
+    axes[1].set_title((title or 'Price Comparison') + ' (Log Scale)')
+    axes[1].set_ylabel('Log Price')
+    axes[1].set_xlabel('Date')
+    axes[1].grid(True)
+    axes[1].legend()
+
+    plt.tight_layout()
+    plt.show()
