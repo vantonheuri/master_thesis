@@ -1,4 +1,4 @@
-# Thesis - Sentiment Impact on Tech Stock Prices
+# Master Thesis - Utilizing Sentiment Analysis to Guide Investment Decisions Across Global Markets
 
 This repository includes all the notebooks and scripts developed for my final thesis project. The objective is to analyze the **impact of financial sentiment** on the stock prices of the “Magnificent Seven” tech companies: Apple, Microsoft, Amazon, Alphabet, Meta, Nvidia, and Tesla.
 
