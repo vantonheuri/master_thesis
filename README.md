@@ -1,29 +1,59 @@
-MSc_Bieri
-Inputs from the profesor
+# Thesis - Sentiment Impact on Tech Stock Prices
 
-- **Analysing the Role of Media Sentiment in the Downfall of Credit Suisse (Master’s Thesis by N. Schubiger):** 
-https://github.com/nschub/Sentiment-and-Financial-Analysis/tree/main
-In this repo, you might be particularly interested in the two files “test_sentiment_analysis.py” and “main.py”. The first file includes the definition of a function to create a news sentiment from an arbitrary text provided. The second file contains a function “process_dataframe” which applies this function in practice (i.e. specifying the GPT system role, the model used, the sentiment scores (1,0,-1) assigned per news article etc.).
-- **AI and Impact Investing (Prototype by HSLU):** 
-https://github.com/HSLU-IFZ-Competence-Center-Investments/AI_and_Impact_Investing
-In this repo, you might be particularly interested in the file “chat.py” from the CODE folder. In this file, you can find the definition of a function to analyse (synthetic) data from a company website to create a ranking of the company’s exposure to the 17 Sustainable Development Goals.
+This repository includes all the notebooks and scripts developed for my final thesis project. The objective is to analyze the **impact of financial sentiment** on the stock prices of the “Magnificent Seven” tech companies: Apple, Microsoft, Amazon, Alphabet, Meta, Nvidia, and Tesla.
 
+## Objective
 
+The goal of this thesis is to explore whether financial news sentiment has predictive power over stock price movements. The approach combines:
 
-Tambien seria interesantate incluir lacuales son las noticias mas relvantesa en cuanto a bearich o bullish, por ejemplo Q earings
+- LLM-based sentiment scoring
+- Econometric models (VAR + IRFs)
+- Price and fundamentals data
+- Dashboard for visualization
 
+---
 
+## Project Structure
 
-HTML
+### 1. `1. Data Extraction.ipynb`
+Extracts historical prices, fundamentals, and financial news using APIs like Alpha Vantage. This is the starting point of the analysis.
 
-python -m venv temp_convert_env
-.\temp_convert_env\Scripts\Activate.ps1
-pip install notebook
+### 2. `2. EDA Initial Study.ipynb`
+First **exploratory data analysis**, focused on understanding the raw data, returns, and basic visualizations.
 
-LUEGO
-python -m jupyter nbconvert --to html "C:\Users\Victor\Downloads\MSc DataScience\MasterThesis - GitHub\2. Exploratory Data Analysis.ipynb"
+### 3. `2. EDA Utils Study.ipynb`
+Another EDA notebook that uses shared utility functions to expand the analysis in a cleaner, more modular way.
 
-Y FINALMENTE
+### 4. `3. LLM Prompt Engineering.ipynb`
+Design and testing of prompts for Large Language Models (LLMs) to evaluate the **sentiment** of news headlines. Used to score how positive or negative each piece of news is.
 
-deactivate
-Remove-Item -Recurse -Force temp_convert_env
+### 5. `4. VAR IRFs - [TICKER].ipynb`
+These notebooks apply **VAR (Vector Autoregression)** and **Impulse Response Functions (IRFs)** to measure how stock prices respond to sentiment shocks. One notebook is created for each company:
+- AAPL (Apple)
+- MSFT (Microsoft)
+- AMZN (Amazon)
+- GOOGL (Alphabet)
+- META (Meta)
+- NVDA (Nvidia)
+- TSLA (Tesla)
+
+Each notebook shows the full modeling process and results for one company.
+
+### 6. `5. Initial MVP.ipynb`
+This notebook contains the **initial MVP** (Minimum Viable Product) that shaped the core idea of the thesis. It helped to define the methodology and validate the concept.
+
+---
+
+### 7. `utils.py`
+A Python script with helper functions for:
+- Loading and cleaning data
+- Calculating returns
+- Integrating sentiment scores
+
+It is used in multiple notebooks to keep the code clean and consistent.
+
+### 8. `stocks_dashboard.py`
+Prototype script to create an interactive dashboard using **Streamlit**. The goal is to visualize key results from the analysis.
+
+> Placeholder for the future dashboard preview:
+> ![Dashboard Preview](path/to/dashboard_image.png)
